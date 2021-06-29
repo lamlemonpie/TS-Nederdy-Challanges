@@ -37,7 +37,7 @@ interface City {
  * summary object that describes that date.
  */
 interface Dates {
-  [date: string]: {
+  [date: number]: {
     temperature: number[]
     summary: TemperatureSummary
   }
@@ -58,7 +58,7 @@ export function processReadings(readings: TemperatureReading[]): void {
   // add here your code
   readings.forEach((reading) => {
     const city = reading.city
-    const date = reading.time.toDateString()
+    const date = reading.time.getTime()
     const tmp = reading.temperature
 
     if (typeof temperatures[city] === 'undefined')
@@ -108,10 +108,10 @@ export function getTemperatureSummary(
   //add here your code
   if (
     typeof temperatures[city] !== 'undefined' &&
-    typeof temperatures[city]['dates'][date.toDateString()] !== 'undefined'
+    typeof temperatures[city]['dates'][date.getTime()] !== 'undefined'
   ) {
     temperatures[city]['histAvg'] /= temperatures[city]['countedReadings']
-    const day = temperatures[city]['dates'][date.toDateString()]
+    const day = temperatures[city]['dates'][date.getTime()]
 
     if (Object.keys(day.summary).length === 0) {
       const dayReadings = day.temperature
